@@ -167,7 +167,7 @@ app.delete("/api/cursos/matematicas/:id",(req,res)=>{
     const id=req.params.id;
      const indice=infoCursos.matemticas.findIndex(curso=> curso.id==id);
 
-     if(id<=0){
+     if(id>=0){
         ///metodo de delete y corta una la parte del codigo indicada, osea elimina
         infoCursos.matemticas.splice(indice,1)
        // infoCursos.matematicas.splice(indice,1);

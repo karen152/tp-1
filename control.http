@@ -1,0 +1,61 @@
+GET http://localhost:3000/api/cursos/matematicas HTTP/1.1
+
+###
+POST http://localhost:3000/api/cursos/matematicas HTTP/1.1
+Content-Type: application/json
+
+{
+    "id": 4,
+    "titulo": "Aprende Sistema de Ecuaciones",
+    "tema": "Ecuaciones",
+    "vistas": 79633000,
+    "nivel": "basico"
+
+}
+
+
+###
+PUT  http://localhost:3000/api/cursos/matematicas/4 HTTP/1.1
+{
+    "id": 4,
+    "titulo": "Aprende Sistema de Ecuaciones",
+    "tema": "Ecuaciones",
+    "vistas": 79633000,
+    "nivel": "intermedio"
+  
+}
+
+###
+DELETE http://localhost:3000/api/cursos/matematicas/3 HTTP/1.1
+Content-Type: application/json
+
+
+###
+POST http://localhost:3000/api/cursos/programacion HTTP/1.1
+Content-Type: application/json
+
+{
+    "id": 5,
+    "titulo": "Aprende C++",
+    "tema": "C++",
+    "vistas": 79633000,
+    "nivel": "basico"
+  
+}
+
+
+###
+PUT  http://localhost:3000/api/cursos/programacion/5 HTTP/1.1
+Content-Type: application/json
+
+{
+    "id": 5,
+    "titulo": "Aprende C++",
+    "tema": "C++",
+    "vistas": 79633000,
+    "nivel": "intermedio"
+}
+
+
+###
+DELETE http://localhost:3000/api/cursos/programacion/4 HTTP/1.1
