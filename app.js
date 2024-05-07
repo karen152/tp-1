@@ -33,18 +33,18 @@ routerprogramacion.get('/',(req,res)=>{ //el camino-ruta esta en el router y pod
     res.send(JSON.stringify(infoCursos.programacion));
 })
 //busqueda de lenguaje de prog
-routerprogramacion.get("/:tema",(req,res)=>{
-    const lenguaje=req.params.lenguaje;
-    const resultado=infoCursos.programacion.filter(curso=>curso.tema===lenguaje);
- if(resultado===0){
-    return res.status(404).send('no se encontro el lenguaje '+lenguaje);
+app.get("/api/cursos/programacion/:tema",(req,res)=>{
+    const tema=req.params.tema;
+    const resultado=infoCursos.programacion.filter(curso=>curso.tema===tema);
 
- }else{
-    res.send(JSON.stringify(resultado));
- }
-});
+    if(resultado.length===0){
+        res.send(JSON.stringify(resultado));
+    }else{
+        res.send(JSON.stringify(resultado));
+    }
+})
 //con nivel
-app.get("/api/cursos/programacion/:tema/:nivel",(req,res)=>{
+app.get("/api/cursos/programacion/:lenguaje/:nivel",(req,res)=>{
     const lenguaje=req.params.lenguaje;
     const nivel=req.params.nivel;
     const resultado=infoCursos.programacion.filter(curso=> curso.tema===lenguaje && curso.nivel===nivel);
@@ -85,7 +85,8 @@ app.post('/api/cursos/programacion', (req, res) => {
        res.send(JSON.stringify( infoCursos.programacion)) ;
     }
     else{
-        res.status(404).send('no se pudo actualizar..id no encontrado');
+        infoCursos.programacion[indice]=cursoactualizado;
+        res.send(JSON.stringify( infoCursos.programacion)) ;
     }
   })
 
@@ -99,10 +100,11 @@ routerprogramacion.delete("/:id",(req,res)=>{
         infoCursos.programacion.splice(indice,1);
         res.send(JSON.stringify(infoCursos));
      }else{
-        ren.status(404).send('este id no existe'); 
+        res.status(404).send('este id no existe'); 
      }
 
 })
+
 
 /////////////////////////////MATEMATICAS/////////////////   
 function getmatematicas(req,res){
@@ -142,7 +144,7 @@ app.get("/api/cursos/matematicas/:tema/:nivel",(req,res)=>{
 app.post("/api/cursos/matematicas",(req,res)=>{
     const nuevoCurso=req.body;
     infoCursos.matemticas.push(nuevoCurso);
-    res.send(infoCursos.matemticas);
+    res.send(JSON.stringify(infoCursos.matemticas));
     
 })
 
@@ -158,7 +160,8 @@ app.put('/api/cursos/matematicas/:id', (req,res)=>{
        res.send(JSON.stringify( infoCursos.matemticas)) ;
     }
     else{
-        res.status(404).send('no se pudo actualizar..id no encontrado');
+        infoCursos.matemticas[indice]=cursoactualizado;
+        res.send(JSON.stringify( infoCursos.matemticas)) ; 
     }
   })
 
@@ -167,17 +170,17 @@ app.delete("/api/cursos/matematicas/:id",(req,res)=>{
     const id=req.params.id;
      const indice=infoCursos.matemticas.findIndex(curso=> curso.id==id);
 
-     if(id>=0){
+     if(id>=0)
+     {
         ///metodo de delete y corta una la parte del codigo indicada, osea elimina
-        infoCursos.matemticas.splice(indice,1)
+        infoCursos.matemticas.splice(indice,1);
        // infoCursos.matematicas.splice(indice,1);
         res.send(JSON.stringify(infoCursos));
-   }
+    }
+    else{
+        res.status(404).send('este id no existe');
+    }
 })
-
- 
-
-
 //consegui el valor del puerto en el entorno q se ejecuta sino sera el 3000
 const PUERTO= process.env.PORT || 3000;
 app.listen(PUERTO, ()=>{
